@@ -1,0 +1,7 @@
+function handleSearch() {
+
+}
+
+$(function() {
+  handleSearch();
+});
