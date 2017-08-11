@@ -63,12 +63,10 @@ main header{
   margin-bottom: 10px;
 }
 section main {
-  padding-left: 5px;
-  padding-right: 5px;
   margin-bottom: 10px;
   background-color: transparent;
 }
-.book-box{
+.book-display{
   margin-bottom: 0;
 }
 .wiki-display{
@@ -85,6 +83,9 @@ section main {
 .video,.book{
   border-top: 2px solid black;
   padding: 5px;
+}
+.video:first-child,.book:first-child{
+  border: none;
 }
 .thumbnail{
   max-width: 90%;
