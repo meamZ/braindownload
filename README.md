@@ -7,11 +7,11 @@
   
 ## Screenshots
 
-![Startpage](screenshots/startpage.png)
+![Startpage](screenshots/startpage.PNG)
 
 When you go to the site you will find this header with the searchbar
 
-![Results](screenshots/results.png)
+![Results](screenshots/results.PNG)
 
 Once you typed something in and clicked search the site scrolls down to the results.
 
