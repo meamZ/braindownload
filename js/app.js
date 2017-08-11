@@ -39,6 +39,9 @@ function handleSearch() {
       renderYouTube(state, $('.js-video-display'));
     });
     $('main').show();
+    $('html, body').animate({
+        scrollTop: $("#maincontent").offset().top
+    }, 1000);
   });
 }
 
@@ -93,10 +96,11 @@ function getGoogleBooksData(state, callback) {
 
 function renderWikipedia(state, element) {
   var key = Object.keys(state.wikidata.query.pages)[0];
-  var text = state.wikidata.query.pages[key].extract;
-  var title = state.wikidata.query.pages[key].title;
+  // the $(...).text(...).html() escapes html chars (needed when searching for 'html')
+  var text = $('<div>').text(state.wikidata.query.pages[key].extract).html();
+  var title = $('<div>').text(state.wikidata.query.pages[key].title).html();
   var link = ' href="https://en.wikipedia.org/wiki/'+title+'"';
-  element.html('<h3>'+title+'</h3>'+'<p>'+text+'</p><a'+link+'>read more</a>');
+  element.html('<h3>'+title+'</h3><p>'+text+'</p><a'+link+'>read more</a>');
 }
 
 function renderYouTube(state, element) {
@@ -125,14 +129,18 @@ function renderBooks(state, element) {
     var title = item.volumeInfo.title;
     var subtitle = (item.volumeInfo.subtitle)? ('<h6>'+item.volumeInfo.subtitle+'</h6>') : '';
     var thumbnailsrc = item.volumeInfo.imageLinks.thumbnail;
-    var description = item.volumeInfo.description.substring(0, 200);
-    if(description.length < item.volumeInfo.description.length) {
-      description += '...';
+    var description = '';
+    if(item.volumeInfo.description) {
+      description = '<p>'+item.volumeInfo.description.substring(0, 200);
+      if(description.length < item.volumeInfo.description.length) {
+        description += '...';
+      }
+      description +='</p>';
     }
     var booklink = ' href="'+item.volumeInfo.infoLink+'"';
     html.push('<div class="book"><a'+booklink+'><img class="thumbnail" src="'+thumbnailsrc+'" alt="'+title+
                 '"></a><h5 class="author">'+author+'</h5><h5 class="booktitle"><a'+booklink+'>'+title+'</a></h5>'+
-                subtitle+'<p>'+description+'</p></div>');
+                subtitle+'<p>'+description+'</div>');
   });
   element.html(html);
 }

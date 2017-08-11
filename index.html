@@ -19,7 +19,7 @@
         <button type="submit" name="button" class="searchbutton">Search</button>
       </form>
     </header>
-    <main class='hidden'>
+    <main class='hidden' id="maincontent">
       <div class="row">
         <section class="wiki-box js-wiki-box col-12">
           <header>
@@ -40,12 +40,14 @@
         </section>
         <section class="book-box js-book-box col-6">
           <header>
-            <h2>Google Books search results</h2>
+            <h2 class="booksheader">Google Books search results</h2>
           </header>
           <main class="book-display js-book-display">
 
           </main>
-          <img src="images/googlebooksimg.png" alt="powered by Google">
+          <div class="poweredbyGContainer">
+            <img src="images/googlebooksimg.png" alt="powered by Google">
+          </div>
         </section>
       </div>
     </main>
