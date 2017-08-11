@@ -6,41 +6,48 @@
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <meta name="description" content="Braindownload helps you to speed up the
     beginning of your learning process about a topic by suggesting articles, books and videos">
-    <link rel="stylesheet" href="styles/css-grid.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="styles/float-grid.css">
     <link rel="stylesheet" href="styles/index.css">
   </head>
   <body>
-    <header>
+    <header class= "row">
       <h1>Braindownload - Kickstart your learning process</h1>
-      <form class="searchform" action="index.html" method="post">
+      <form class="searchform" method="post">
         <h3>Type in a topic you want to learn about and click search!</h3>
-        <input type="search" name="searchvalue" value="" placeholder="your topic">
+        <input type="search" id="topicsearch" name="searchvalue" class="searchbar" value="" placeholder="Your topic...">
         <button type="submit" name="button" class="searchbutton">Search</button>
       </form>
     </header>
-    <main>
-      <section class="wiki-box js-wiki-box">
-        <header>
-          <h3>Wikipedia article</h3>
-        </header>
-        <main class="wiki-display js-wiki-display">
-        </main>
-      </section>
-      <section class="video-box js-video-box">
-        <header>
-          <h3>Videos</h3>
-        </header>
-        <main class="video-display js-video-display"
-        </main>
-      </section>
-      <section class="book-box js-book-box">
-        <header>
-          <h3>Books</h3>
-        </header>
-        <main class="book-display js-book-display">
+    <main class='hidden'>
+      <div class="row">
+        <section class="wiki-box js-wiki-box col-12">
+          <header>
+            <a href="https://www.wikipedia.org"><img class="wikipedialogo" src="images/Wikipedia-logo.png" alt="Wikipedia Aaticle"></a>
+          </header>
+          <main class="wiki-display js-wiki-display">
+          </main>
+        </section>
+      </div>
+      <div class="row">
+        <section class="video-box js-video-box col-6">
+          <header>
+            <a href="https://www.youtube.com"><img class="youtubelogo" src="images/YouTube-logo-full_color.png" alt="YouTube"></a>
+            <h2 class="videoheading">Videos</h2>
+          </header>
+          <main class="video-display js-video-display">
+          </main>
+        </section>
+        <section class="book-box js-book-box col-6">
+          <header>
+            <h2>Google Books search results</h2>
+          </header>
+          <main class="book-display js-book-display">
 
-        </main>
-      </section>
+          </main>
+          <img src="images/googlebooksimg.png" alt="powered by Google">
+        </section>
+      </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   	<script src="js/app.js" charset="utf-8"></script>

@@ -1,0 +1,86 @@
+*{
+  font-family: roboto, sans-serif;
+}
+body{
+  background-color: #FFBA5A;
+}
+section{
+  background-color: white;
+  border: 1px solid black;
+}
+header{
+  text-align: center;
+}
+header h1{
+  font-size: 40px;
+}
+.searchbar{
+  width: 80%;
+  font-size: 25px;
+  text-align: center;
+}
+.searchbutton{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border: none;
+  font-size: 25px;
+  width: 90px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+section main {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  background-color: white;
+}
+.video-box, .book-box{
+  text-align: center;
+}
+.video,.book{
+  border: 1px solid black;
+  padding: 5px;
+}
+.thumbnail{
+  max-width: 90%;
+}
+.youtubelogo{
+  width: 40%;
+  z-index: -10;
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
+.videoheading{
+  margin-top: 0;
+  padding-top: 0;
+}
+.wikipedialogo{
+  height: 100px;
+}
+.book a,.video a{
+  color: black;
+}
+.booktitle, .videotitle, .author, .channeltitle{
+  display: block;
+}
+.booktitle, .videotitle{
+  font-size: 18px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.author{
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.channeltitle{
+  margin:0;
+  padding: 0;
+  font-size: 13px;
+}
+.hidden{
+  display: none;
+}

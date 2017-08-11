@@ -1,5 +1,5 @@
 var state = {
-  currentsearch: 'structures',
+  currentsearch: '',
   wikidata: {},
   youtubedata : {},
   bookdata : {},
@@ -22,20 +22,23 @@ function setBookData(state, bookdata) {
 }
 
 function handleSearch() {
-  //TODO: handle Submits
-}
+  $('.searchform').submit(function(event){
+    event.preventDefault();
+    setCurrentSearch(state,$(this).find('#topicsearch').val());
+    getGoogleBooksData(state, function (data) {
+      setBookData(state, data);
+      renderBooks(state,$('.js-book-display'));
 
-function getWikipediaData(state, callback) {
-  var query = {
-    action: 'opensearch',
-    search: state.currentsearch,
-    limit: 1,
-    namespace: 0,
-    format: 'json',
-    origin: '*',
-  };
-  $.getJSON('https://en.wikipedia.org/w/api.php', query, function (name) {
-    getWikipediaArticle(name[1][0], callback);
+    });
+    getWikipediaData(state, function(data){
+      setWikiData(state, data);
+      renderWikipedia(state,$('.js-wiki-display'));
+    });
+    getYouTubeData(state, function(data) {
+      setYouTubeData(state, data);
+      renderYouTube(state, $('.js-video-display'));
+    });
+    $('main').show();
   });
 }
 
@@ -50,6 +53,20 @@ function getWikipediaArticle(name, callback) {
     origin: '*',
   };
   $.getJSON('https://en.wikipedia.org/w/api.php', query, callback);
+}
+
+function getWikipediaData(state, callback) {
+  var query = {
+    action: 'opensearch',
+    search: state.currentsearch,
+    limit: 1,
+    namespace: 0,
+    format: 'json',
+    origin: '*',
+  };
+  $.getJSON('https://en.wikipedia.org/w/api.php', query, function (name) {
+    getWikipediaArticle(name[1][0], callback);
+  });
 }
 
 function getYouTubeData(state, callback) {
@@ -74,45 +91,52 @@ function getGoogleBooksData(state, callback) {
   $.getJSON('https://www.googleapis.com/books/v1/volumes', query, callback);
 }
 
-function renderWikipedia(state) {
+function renderWikipedia(state, element) {
   var key = Object.keys(state.wikidata.query.pages)[0];
   var text = state.wikidata.query.pages[key].extract;
   var title = state.wikidata.query.pages[key].title;
-  var link = ''; //TODO: insert link here
-  element.html('<h2>'+title+'</h2>'+'<p>'+text+'</p><a href="'+link+
-                '">read more</a>');
+  var link = ' href="https://en.wikipedia.org/wiki/'+title+'"';
+  element.html('<h3>'+title+'</h3>'+'<p>'+text+'</p><a'+link+'>read more</a>');
 }
 
-function renderYouTube(state) {
+function renderYouTube(state, element) {
   var html= [];
-  var items = json.items;
+  var items = state.youtubedata.items;
   items.forEach(function (item) {
     var title = item.snippet.title;
     var thumbnailsrc = item.snippet.thumbnails.medium.url;
     var description = item.snippet.description;
-    var channel = item.snippet.ChannelTitle;
-    html.push('<div class="video"><img src="'+thumbnailsrc+'" alt="'+title+
-                '"><h5>'+title+'</h5><span>'+
-                channel+'</span><p>'+description+'</p></div>');
+    var channel = item.snippet.channelTitle;
+    var videoLink = ' href="https://www.youtube.com/watch?v='+item.id.videoId+'"';
+    var channelLink = ' href="https://www.youtube.com/channel/'+item.snippet.channelId+'"';
+    html.push('<div class="video"><a'+videoLink+'><img class="thumbnail" src="'+thumbnailsrc+'" alt="'+
+                title+'"></a><h5 class="videotitle"><a'+videoLink+'>'+title+
+                '</a></h5><h6 class="channeltitle"><a'+channelLink+'>'+ channel+
+                '</a></h6><p>'+description+'</p></div>');
   });
-  return html;
+  element.html(html);
 }
 
 function renderBooks(state, element) {
   var html= [];
   var items = state.bookdata.items;
   items.forEach(function (item) {
-    var title = item.title;
-    var subtitle = item.subtitle;
+    var author = item.volumeInfo.authors;
+    var title = item.volumeInfo.title;
+    var subtitle = (item.volumeInfo.subtitle)? ('<h6>'+item.volumeInfo.subtitle+'</h6>') : '';
     var thumbnailsrc = item.volumeInfo.imageLinks.thumbnail;
-    var description = item.snippet.description;
-    html.push('<div class="video"><img src="'+thumbnailsrc+'" alt="'+title+
-                '"><h5>'+title+'</h5><h6>'+
-                subtitle+'</h6><p>'+description+'</p></div>');
+    var description = item.volumeInfo.description.substring(0, 200);
+    if(description.length < item.volumeInfo.description.length) {
+      description += '...';
+    }
+    var booklink = ' href="'+item.volumeInfo.infoLink+'"';
+    html.push('<div class="book"><a'+booklink+'><img class="thumbnail" src="'+thumbnailsrc+'" alt="'+title+
+                '"></a><h5 class="author">'+author+'</h5><h5 class="booktitle"><a'+booklink+'>'+title+'</a></h5>'+
+                subtitle+'<p>'+description+'</p></div>');
   });
   element.html(html);
 }
 
 $(function() {
-  //TODO: Call the necesarry functions
+  handleSearch();
 });
