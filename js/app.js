@@ -85,7 +85,7 @@ function getGoogleBooksData(state, callback) {
     maxResults: '5',
     printType: 'books',
     orderBy: 'relevance',
-    key: 'AIzaSyBxK5RGw1Q9lc-ShfPNRSTphxgwjx_m21I',
+    key: 'AIzaSyBGtZopHFhQfQLm_Jt2KNWV-g7EHqXtODg',
     q: state.currentsearch,
   };
   $.getJSON('https://www.googleapis.com/books/v1/volumes', query, callback);
